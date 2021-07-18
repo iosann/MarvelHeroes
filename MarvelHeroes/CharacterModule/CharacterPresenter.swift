@@ -7,14 +7,28 @@
 
 import Foundation
 
-protocol ICharacterPresenter { }
+protocol ICharacterPresenter {
+	func getCharacters(name: String)
+	func getCharacterImage(imageUrl: String)
+}
 
-class CharacterPresenter: ICharacterPresenter {
+class CharacterPresenter {
 
 	private var router: ICharacterRouter
 	var view: ICharacterViewController?
 
 	init(router: ICharacterRouter) {
 		self.router = router
+	}
+}
+
+extension CharacterPresenter: ICharacterPresenter {
+
+	func getCharacters(name: String) {
+
+	}
+
+	func getCharacterImage(imageUrl: String) {
+
 	}
 }

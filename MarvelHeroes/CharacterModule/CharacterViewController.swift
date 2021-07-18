@@ -9,9 +9,30 @@ import UIKit
 
 protocol ICharacterViewController { }
 
-class CharacterViewController: UIViewController, ICharacterViewController {
+class CharacterViewController: UIViewController {
+
+	private let placeholderOfSearchBar = "Find character"
+	private let titleOfView = "🦸‍♂️ Heroes"
+
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView()
+		tableView.delegate = self
+		tableView.dataSource = self
+		return tableView
+	}()
+
+	private lazy var searchController: UISearchController = {
+		let controller = UISearchController(searchResultsController: nil)
+		controller.searchBar.delegate = self
+		controller.obscuresBackgroundDuringPresentation = false
+		controller.searchBar.placeholder = placeholderOfSearchBar
+		self.navigationItem.searchController = controller
+		self.definesPresentationContext = true
+		return controller
+	}()
 
 	private let presenter: ICharacterPresenter
+	private var characters = [Character]()
 
 	init(presenter: ICharacterPresenter) {
 		self.presenter = presenter
@@ -24,7 +45,58 @@ class CharacterViewController: UIViewController, ICharacterViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		setupUI()
     }
+
+	private func setupUI() {
+		tableView.register(CharacterCell.self, forCellReuseIdentifier: "Cell")
+		navigationController?.navigationBar.prefersLargeTitles = true
+		title = titleOfView
+		view.backgroundColor = .white
+	}
+
+	private func setupConstraints() {
+
+		tableView.translatesAutoresizingMaskIntoConstraints = false
+
+		NSLayoutConstraint.activate([
+			tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+			tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+			tableView.topAnchor.constraint(equalTo: view.topAnchor),
+			tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+		])
+	}
+}
+
+extension CharacterViewController: UITableViewDataSource, UITableViewDelegate
+{
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return characters.count
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CharacterCell
+		cell?.nameLabel.text = characters[indexPath.row].name
+		cell?.descriptionLabel.text = characters[indexPath.row].description.isEmpty
+			? "No info"
+			: characters[indexPath.row].description
+
+	//	cell?.characterImageView.image =
+		return cell ?? UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+	}
+}
+
+extension CharacterViewController: UISearchBarDelegate
+{
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		guard let searchText = searchBar.text, searchText.isEmpty == false else { return }
+		presenter.getCharacters(name: searchText)
+		tableView.isHidden = false
+		self.tableView.reloadData()
+	}
+}
+
+extension CharacterViewController: ICharacterViewController {
 
 }
