@@ -7,11 +7,12 @@
 
 import Foundation
 
-class Factory
-{
+class Factory {
 	func getCharacterViewController() -> CharacterViewController {
+		let networkService = NetworkService()
+		let repository = CharacterRepository(networkService: networkService)
 		let router = CharacterRouter(factory: self)
-		let presenter = CharacterPresenter(router: router)
+		let presenter = CharacterPresenter(router: router, repository: repository)
 		let viewController = CharacterViewController(presenter: presenter)
 		router.viewController = viewController
 		presenter.view = viewController

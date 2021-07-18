@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ICharacterViewController { }
+protocol ICharacterViewController: AnyObject { }
 
 class CharacterViewController: UIViewController {
 
@@ -26,8 +26,8 @@ class CharacterViewController: UIViewController {
 		controller.searchBar.delegate = self
 		controller.obscuresBackgroundDuringPresentation = false
 		controller.searchBar.placeholder = placeholderOfSearchBar
-		self.navigationItem.searchController = controller
-		self.definesPresentationContext = true
+		navigationItem.hidesSearchBarWhenScrolling = false
+		definesPresentationContext = true
 		return controller
 	}()
 
@@ -45,7 +45,10 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.addSubview(tableView)
+		navigationItem.searchController = searchController
 		setupUI()
+		setupConstraints()
     }
 
 	private func setupUI() {
@@ -68,8 +71,8 @@ class CharacterViewController: UIViewController {
 	}
 }
 
-extension CharacterViewController: UITableViewDataSource, UITableViewDelegate
-{
+extension CharacterViewController: UITableViewDataSource, UITableViewDelegate {
+
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return characters.count
 	}
@@ -87,8 +90,8 @@ extension CharacterViewController: UITableViewDataSource, UITableViewDelegate
 	}
 }
 
-extension CharacterViewController: UISearchBarDelegate
-{
+extension CharacterViewController: UISearchBarDelegate {
+	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		guard let searchText = searchBar.text, searchText.isEmpty == false else { return }
 		presenter.getCharacters(name: searchText)
