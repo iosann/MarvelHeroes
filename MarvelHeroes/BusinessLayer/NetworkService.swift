@@ -9,9 +9,11 @@ import UIKit
 
 typealias DataResult = Result<Data, ServiceError>
 typealias CharacterResult = Result<[Character], ServiceError>
+typealias ImageResult = Result<UIImage, ServiceError>
 
 protocol INetworkService {
 	func loadCharacter(name: String, _ completion: @escaping(CharacterResult) -> Void)
+	func loadImage(imageUrl: String, _ completion: @escaping (ImageResult) -> Void)
 }
 
 class NetworkService {
@@ -66,6 +68,21 @@ extension NetworkService: INetworkService {
 				catch {
 					completion(.failure(ServiceError.dataError(error)))
 				}
+			case .failure(let error):
+				completion(.failure(error))
+				print(error.localizedDescription)
+			}
+		}
+	}
+
+	func loadImage(imageUrl: String, _ completion: @escaping (ImageResult) -> Void) {
+
+		guard let url = URL(string: imageUrl) else { return }
+		fetchData(from: url) { imageResult in
+			switch imageResult {
+			case .success(let data):
+				guard let image = UIImage(data: data) else { return }
+				completion(.success(image))
 			case .failure(let error):
 				completion(.failure(error))
 				print(error.localizedDescription)

@@ -76,10 +76,7 @@
 				D09F678126A45E160086255B /* BusinessLayer */,
 				D09F677A26A3681B0086255B /* CharacterModule */,
 				D09F678A26A472120086255B /* Extensions */,
-				D0765C5D269B784D000F7286 /* AppDelegate.swift */,
-				D0765C66269B7857000F7286 /* Assets.xcassets */,
-				D0765C68269B7857000F7286 /* LaunchScreen.storyboard */,
-				D0765C6B269B7857000F7286 /* Info.plist */,
+				D09F678D26A5868E0086255B /* SupportingFiles */,
 			);
 			path = MarvelHeroes;
 			sourceTree = "<group>";
@@ -121,6 +118,17 @@
 				D09F678826A471F20086255B /* String.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D09F678D26A5868E0086255B /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				D0765C5D269B784D000F7286 /* AppDelegate.swift */,
+				D0765C66269B7857000F7286 /* Assets.xcassets */,
+				D0765C68269B7857000F7286 /* LaunchScreen.storyboard */,
+				D0765C6B269B7857000F7286 /* Info.plist */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,7 +352,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2VAU5M9JPP;
-				INFOPLIST_FILE = MarvelHeroes/Info.plist;
+				INFOPLIST_FILE = /Users/macbookair/Documents/Developer/MarvelHeroes/MarvelHeroes/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -364,7 +372,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2VAU5M9JPP;
-				INFOPLIST_FILE = MarvelHeroes/Info.plist;
+				INFOPLIST_FILE = /Users/macbookair/Documents/Developer/MarvelHeroes/MarvelHeroes/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

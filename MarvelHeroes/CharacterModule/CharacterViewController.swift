@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ICharacterViewController: AnyObject { }
+protocol ICharacterViewController: AnyObject {
+	func show(_ characters: [Character])
+}
 
 class CharacterViewController: UIViewController {
 
@@ -85,7 +87,13 @@ extension CharacterViewController: UITableViewDataSource, UITableViewDelegate {
 			? "No info"
 			: characters[indexPath.row].description
 
-	//	cell?.characterImageView.image =
+		if let path = characters[indexPath.row].thumbnail.path,
+			let imageExtension = characters[indexPath.row].thumbnail.imageExtension {
+			let urlString = "\(path).\(imageExtension)"
+			presenter.getCharacterImage(imageUrl: urlString) { image in
+				cell?.characterImageView.image = image
+			}
+		}
 		return cell ?? UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
 	}
 }
@@ -101,5 +109,10 @@ extension CharacterViewController: UISearchBarDelegate {
 }
 
 extension CharacterViewController: ICharacterViewController {
-
+	func show(_ characters: [Character]) {
+		self.characters = characters
+		if self.characters.count > 0 {
+			self.tableView.reloadData()
+		}
+	}
 }

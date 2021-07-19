@@ -8,6 +8,7 @@
 import Foundation
 
 class Factory {
+	
 	func getCharacterViewController() -> CharacterViewController {
 		let networkService = NetworkService()
 		let repository = CharacterRepository(networkService: networkService)
